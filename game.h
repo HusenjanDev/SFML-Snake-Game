@@ -92,9 +92,9 @@ private:
 	sf::Texture snake_texture;
 
 	bool is_moving_up = false,
-		 is_moving_down = false,
-		 is_moving_right = false,
-		 is_moving_left = false;
+	     is_moving_down = false,
+	     is_moving_right = false,
+	     is_moving_left = false;
 
 	// Temporarily rectangle variable
 	sf::Sprite temp;
