@@ -2,6 +2,8 @@
 
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <list>
 
 class game
@@ -62,26 +64,44 @@ public:
 	/// </summary>
 	void ate_food();
 
+	void menu();
+
 	/// <summary>
 	/// Renders utilities
 	/// </summary>
 	void render();
 
 private:
+	// Total eaten apple's
+	int score = 0;
+
+	// Font holder
+	sf::Font font;
+
+	// Score text
+	sf::Text menu_str;
+
+	// Temporarily unique ptr
+	sf::RectangleShape menu_rect;
+
+private:
 	/*
 	 * Player utilities
 	 */
-	std::list<sf::RectangleShape> snake;
+	std::list<sf::Sprite> snake;
+	sf::Texture snake_texture;
+
 	bool is_moving_up = false,
 		 is_moving_down = false,
 		 is_moving_right = false,
 		 is_moving_left = false;
 
 	// Temporarily rectangle variable
-	sf::RectangleShape temp;
+	sf::Sprite temp;
 
 private:
-	sf::RectangleShape food;
+	sf::Sprite food;
+	sf::Texture food_texture;
 
 private:
 	// Renders window

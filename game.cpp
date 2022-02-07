@@ -11,8 +11,15 @@ game::game(int width, int height, std::string window_name)
 
 void game::init_snake()
 {
-	// Setting up snake size
-	this->temp.setSize(sf::Vector2f(20.f, 20.f));
+	// Initializing the texture.
+	if (!this->snake_texture.loadFromFile("Snake.png"))
+	{
+		throw std::runtime_error("Could not load image.png");
+	}
+
+	// Setting up the texture.
+	this->temp.setTexture(this->snake_texture);
+	this->temp.setScale({ 1.f, 1.f });
 
 	// Head of snake
 	this->temp.setPosition(sf::Vector2f(60.f, 0.f));
@@ -30,11 +37,15 @@ void game::init_snake()
 
 void game::init_food()
 {
-	// Setting up the size of the food
-	this->food.setSize(sf::Vector2f(20.f, 20.f));
-	
-	// Assigning the food the color red
-	this->food.setFillColor(sf::Color::Red);
+	// Initializing the texture.
+	if (!this->food_texture.loadFromFile("Food.png"))
+	{
+		throw std::runtime_error("Could not load image.png");
+	}
+
+	// Setting up the texture.
+	this->food.setTexture(this->food_texture);
+	this->temp.setScale({ 1.f, 1.f });
 
 	// Setting up the position of the food
 	this->food.setPosition(sf::Vector2f(100.f, 100.f));
@@ -115,9 +126,6 @@ void game::input_handler(sf::Keyboard::Key key, bool isPressed)
 	}
 }
 
-/// <summary>
-/// Updates the movement for the snake
-/// </summary>
 void game::update()
 {
 	if (this->is_moving_up)
@@ -139,7 +147,7 @@ void game::update()
 		this->snake.pop_back();
 	}
 
-	if (this->is_moving_down)
+	else if (this->is_moving_down)
 	{
 		// If snake.y position is above 580 then... 
 		if (snake.front().getPosition().y > 580)
@@ -158,7 +166,7 @@ void game::update()
 		this->snake.pop_back();
 	}
 
-	if (this->is_moving_right)
+	else if (this->is_moving_right)
 	{
 		// If snake.x position is above 780 then...
 		if (snake.front().getPosition().x > 780)
@@ -177,7 +185,7 @@ void game::update()
 		this->snake.pop_back();
 	}
 
-	if (this->is_moving_left)
+	else if (this->is_moving_left)
 	{
 		// If snake.x position is less than 0 then...
 		if (snake.front().getPosition().x < 0)
@@ -231,9 +239,11 @@ void game::ate_food()
 	if (this->snake.front().getGlobalBounds().intersects(this->food.getGlobalBounds()))
 	{
 		// Random x position
-		int x_pos = (rand() % (770 / 50) * 50);
+		int x_pos = (rand() % 39 + 0) * 20;
+
+
 		// Random y position
-		int y_pos = (rand() % (570 / 50) * 50);
+		int y_pos = (rand() % 30 + 0) * 20;
 
 		// Assigning the food new position
 		this->food.setPosition(x_pos, y_pos);
@@ -241,14 +251,51 @@ void game::ate_food()
 		/* Increasing the length of the snake */
 		this->temp.setPosition(sf::Vector2f(this->snake.back().getPosition().x + 20, this->snake.back().getPosition().y));
 		this->snake.push_back(this->temp);
+
+		// Increasing the size of score
+		this->score++;
 	}
+}
+
+void game::menu()
+{
+	// Initializing font...
+	if (!font.loadFromFile("smallpixels7.ttf"))
+	{
+		throw std::runtime_error("Could not load smallpixels7 font");
+	}
+
+	/* Background of the menu */
+	this->menu_rect.setFillColor(sf::Color(98, 98, 98));
+	this->menu_rect.setSize({ 102.f, 22.f });
+	this->menu_rect.setPosition(sf::Vector2f(690.f, 10.f));
+
+	this->app.draw(menu_rect);
+
+	/* Font of the menu. */
+	this->menu_rect.setFillColor(sf::Color(41, 38, 39, 255));
+	this->menu_rect.setSize({ 100.f, 20.f });
+	this->menu_rect.setPosition(sf::Vector2f(menu_rect.getPosition().x + 1, menu_rect.getPosition().y + 1));
+
+	this->app.draw(menu_rect);
+
+	/* Setting up score */
+	this->menu_str.setFont(this->font);
+	this->menu_str.setCharacterSize(11.f);
+	this->menu_str.setString("SCORE: " + std::to_string(this->score));
+	this->menu_str.setPosition(menu_rect.getPosition().x + 5, menu_rect.getPosition().y + 2);
+
+	this->app.draw(menu_str);
 }
 
 void game::render()
 {
 	// Clearing screen
-	this->app.clear();
+	this->app.clear(sf::Color(23, 21, 22, 255));
 	
+	// Rendering menu
+	menu();
+
 	// Rendering our snake
 	draw_snake();
 	
