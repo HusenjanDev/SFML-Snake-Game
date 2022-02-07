@@ -1,2 +1,2 @@
 # Snake-Game-SFML
-The Snake Game is a famous game that a lot of people for sure has played because it was defaultly installed on all phones. It's a really fun game and even tho it's simple game its for sure one of the greatest games to ever been created. 
+The Snake Game is a famous game that a lot of people for sure has played because it was defaultly installed on all phones. It's a really fun game and even tho it's a simple game its for sure one of the greatest games to play. I decided to create an replicate of the game by using the SFML library. I had really fun creating this game and learned decent amount of the SFML library by making the Snake Game.
