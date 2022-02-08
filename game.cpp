@@ -12,7 +12,7 @@ game::game(int width, int height, std::string window_name)
 void game::init_snake()
 {
 	// Initializing the texture.
-	if (!this->snake_texture.loadFromFile("Snake.png"))
+	if (!this->snake_texture.loadFromFile("img/Snake.png"))
 	{
 		throw std::runtime_error("Could not load image.png");
 	}
@@ -38,7 +38,7 @@ void game::init_snake()
 void game::init_food()
 {
 	// Initializing the texture.
-	if (!this->food_texture.loadFromFile("Food.png"))
+	if (!this->food_texture.loadFromFile("img/Food.png"))
 	{
 		throw std::runtime_error("Could not load image.png");
 	}
@@ -260,7 +260,7 @@ void game::ate_food()
 void game::menu()
 {
 	// Initializing font...
-	if (!this->font.loadFromFile("smallpixels7.ttf"))
+	if (!this->font.loadFromFile("fonts/smallpixels7.ttf"))
 	{
 		throw std::runtime_error("Could not load smallpixels7 font");
 	}
