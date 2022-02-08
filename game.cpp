@@ -260,7 +260,7 @@ void game::ate_food()
 void game::menu()
 {
 	// Initializing font...
-	if (!font.loadFromFile("smallpixels7.ttf"))
+	if (!this->font.loadFromFile("smallpixels7.ttf"))
 	{
 		throw std::runtime_error("Could not load smallpixels7 font");
 	}
@@ -270,35 +270,35 @@ void game::menu()
 	this->menu_rect.setSize({ 102.f, 22.f });
 	this->menu_rect.setPosition(sf::Vector2f(690.f, 10.f));
 
-	this->app.draw(menu_rect);
+	this->app.draw(this->menu_rect);
 
 	/* Font of the menu. */
 	this->menu_rect.setFillColor(sf::Color(41, 38, 39, 255));
 	this->menu_rect.setSize({ 100.f, 20.f });
-	this->menu_rect.setPosition(sf::Vector2f(menu_rect.getPosition().x + 1, menu_rect.getPosition().y + 1));
+	this->menu_rect.setPosition(sf::Vector2f(this->menu_rect.getPosition().x + 1, menu_rect.getPosition().y + 1));
 
-	this->app.draw(menu_rect);
+	this->app.draw(this->menu_rect);
 
 	/* Setting up score */
 	this->menu_str.setFont(this->font);
 	this->menu_str.setCharacterSize(11.f);
 	this->menu_str.setString("SCORE: " + std::to_string(this->score));
-	this->menu_str.setPosition(menu_rect.getPosition().x + 5, menu_rect.getPosition().y + 2);
+	this->menu_str.setPosition(this->menu_rect.getPosition().x + 5, this->menu_rect.getPosition().y + 2);
 
-	this->app.draw(menu_str);
+	this->app.draw(this->menu_str);
 }
 
 void game::render()
 {
 	// Clearing screen
 	this->app.clear(sf::Color(23, 21, 22, 255));
-	
-	// Rendering menu
-	menu();
 
 	// Rendering our snake
 	draw_snake();
 	
+	// Rendering menu
+	menu();
+
 	// Rendering our food
 	this->app.draw(this->food);
 
